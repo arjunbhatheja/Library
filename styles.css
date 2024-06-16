@@ -2,16 +2,19 @@ body{
     background-image: url("space.jpg");
     font-family: Arial, sans-serif;
 }
-.form{
+form{
     display: flex;
     margin: auto;
     text-align: center;
     border: 9px solid rgb(0, 0, 0);
     background-color: rgb(47, 74, 56);
     padding: 20px;
+    color: rgb(152, 152, 158);
     color: rgb(250, 249, 249);
-    font-size: x-large;
+    font-size: large;
+    transform: translateX(100%);
     visibility: visible;
+    overflow: hidden;
 }
 #formAnim{
     animation: formAnimSwipe .6s;
@@ -46,6 +49,8 @@ body{
     color: #fff;
     border: none;
     border-radius: 5px;
+    transform: translateY(-200%);
+    scale: 1.3;
     font-size: 18px;
     cursor: pointer;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -108,19 +113,16 @@ body{
     margin: 10px 0;
 }
 input{
-    /* border: 3px solid rgb(145, 30, 30); */
     border: 3px solid black;
     background-color: rgb(138, 171, 138);
     color: rgb(0, 0, 0);
 }
 
-.radio{
-    color: brown;
+#radio{
+    accent-color: rgb(0,0,0);
 }
 h1{
-    /* background-color: rgb(61, 128, 59); */
     font-size: 4rem;
-    /* color: rgb(161, 222, 170); */
     color: rgba(0, 0, 0, 0.938);
     margin : 10px;
 }
@@ -152,4 +154,11 @@ h1{
     z-index: 20;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
+}
+.name{
+    position: absolute;
+    bottom: 20px; /* Adjust to desired distance from the bottom */
+    right: 20px; /* Adjust to desired distance from the right */
+    font-size: xx-large;
+    color: #e8e8e8;
 }

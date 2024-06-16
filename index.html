@@ -7,20 +7,20 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <form class="form" method="dialog">
+    <form class="form" method="post">
         <h1>Book Info</h1>
         <div class="form-group">
         <label for="title">Title: </label><br>
-        <input type="text" name="title" id="title"><br><br>
+        <input type="text" name="title" id="title" maxlength="60"><br><br>
     </div>
     <div class="form-group">
         <label for="author">Author: </label><br>
-        <input type="text" name="author" id="author"><br><br>
+        <input type="text" name="author" id="author" maxlength="40"><br><br>
     </div>
 
         <div class="form-group">
         <label for="pages">Number of Pages: </label><br>
-        <input type="number" name="pages" id="pages"><br><br>
+        <input type="number" name="pages" id="pages" min = "1"><br><br>
     </div>
 
         <div class="form-group">
@@ -35,6 +35,7 @@
     </form>
     <button class="FormVis">New Book</button>
     <div class="display"></div>
+    <footer class="name">Mini Library by ~Arjun</footer>
     <script src="lib.js"></script>
 </body>
 </html>

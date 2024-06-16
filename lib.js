@@ -1,4 +1,5 @@
 const myLibrary = [];
+const MAX_CAPACITY = 12;
 
 function Book(title, author, pages, read) {
   this.title = title;
@@ -12,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   button.addEventListener('click', () => {
 
-    if (form.style.transform === "translateX(100%)"){
+    if (form.style.transform != "translateX(0%)"){
       button.id = "formVisAnimret";
     form.id = "formAnimret";
     setTimeout(function(){
@@ -45,11 +46,29 @@ document.addEventListener('DOMContentLoaded', () => {
 const display = document.querySelector(".display");
 function addBookToLibrary(event) {
     event.preventDefault();
-
+    if (myLibrary.length >= MAX_CAPACITY) {
+      alert(`Library is full! Maximum capacity of ${MAX_CAPACITY} books reached.`);
+      return;
+    }
   const title = document.getElementById("title").value;
     const author = document.getElementById("author").value;
     const pages = document.getElementById("pages").value;
     const read = document.querySelector('input[name="read"]:checked').value;
+    const MAX_PAGES_LENGTH = 4; 
+
+   const page = pages.toString(); 
+    if (page.length > MAX_PAGES_LENGTH) {
+      alert(`The number of pages cannot exceed ${MAX_PAGES_LENGTH} digits.`);
+      return;
+    }
+
+    const isDuplicate = myLibrary.some(book => book.title === title && book.author === author && book.pages === pages);
+
+    if (isDuplicate) {
+      alert("This book is already in the library.");
+      return;
+    }
+
     let book;
     if(read == "read"){
         book = new Book(title, author, pages, true);
@@ -57,99 +76,90 @@ function addBookToLibrary(event) {
     else{
         book = new Book(title, author, pages, false);
     }
+    if(title === "" || author === "" || pages === ""){
+      return;
+    }
     myLibrary.push(book);
+
+    document.getElementById("title").value = "";
+    document.getElementById("author").value = "";
+    document.getElementById("pages").value = "";
+    renderLibrary();
+  }
+  function renderLibrary(){
     display.innerHTML = '';
-    for(let i = 0; i < myLibrary.length; i++){
+    myLibrary.forEach((book, index) =>{
       const page = document.createElement('div');
       const deleteButton = document.createElement('button'); 
+      deleteButton.classList.add('deleteButton');
       deleteButton.innerHTML = 'Delete Book';
-      deleteButton.style.backgroundColor = 'red';
+      deleteButton.style.backgroundColor = 'blue';
       deleteButton.style.color = 'white';
       deleteButton.style.borderRadius = '5px';
       deleteButton.style.padding = '5px';
       deleteButton.style.margin = '10px';
 
       page.classList.add('page');
-      display.appendChild(page);
-      page.style.backgroundColor = 'rgb(61, 128, 59)';
+      page.style.backgroundColor = 'rgb(152, 152, 158)';
+      // page.style.opacity = '0.2';
       page.style.flexWrap = 'wrap';
-      page.style.color = 'white';
+      page.style.color = 'black';
       page.style.margin = '20px 40px';
       page.style.padding = '20px';
       page.style.borderRadius = '10px';
       page.style.textAlign = 'center';
       page.style.fontSize = '20px';
+      page.style.overflow = 'hidden';
+      page.style.textoverflow= 'ellipsis';
+      page.style.whitespace= 'nowrap';
       page.style.fontWeight = 'bold';
       page.style.borderLeft = '10px solid rgb(48, 46, 45)';
-      page.style.boxShadow = '8px 3px rgb(237, 199, 171), 11px 6px #000000, 12px 7px 0px #000000, 14px 9px 0px #000000';
-      page.innerHTML += `${myLibrary[i].title}<br><br>`;
-      page.innerHTML += `${myLibrary[i].author}<br><br>`;
-      page.innerHTML += `${myLibrary[i].pages}<br><br>`;
-
-      if(myLibrary[i].read){
-        page.innerHTML += `<p> Read </p>`;
-      }
-      else{
-        page.innerHTML += `<p> Not Read </p>`;
-      }
-      page.appendChild(deleteButton);
-  }
+      page.style.boxShadow = '8px 3px rgb(219,230,210), 11px 6px #000000, 12px 7px 0px #000000, 14px 9px 0px #000000';
+      page.style.maxHeight = '80%';
+    
+      const titleElem = document.createElement('div');
+      titleElem.style.fontWeight = 'bold';
+      titleElem.textContent = book.title;
+      titleElem.style.paddingRight = '40px';
+      page.appendChild(titleElem);
   
-}
-// function deleteBook(index) {
-//   myLibrary.splice(index, 1);
-//   display.innerHTML = '';
-//   for(let i = 0; i < myLibrary.length; i++){
-//     const page = document.createElement('div');
-//     const deleteButton = document.createElement('button');
-//     deleteButton.innerHTML = 'Delete Book';
-//     deleteButton.style.backgroundColor = 'red';
-//     deleteButton.style.color = 'white';
-//     deleteButton.style.borderRadius = '5px';
-//     deleteButton.style.padding = '5px';
-//     deleteButton.style.margin = '10px';
-
-//     page.classList.add('page');
-//     display.appendChild(page);
-//     page.style.backgroundColor = 'rgb(61, 128, 59)';
-//     page.style.flexWrap = 'wrap';
-//     page.style.color = 'white';
-//     page.style.margin = '20px 40px';
-//     page.style.padding = '20px';
-//     page.style.borderRadius = '10px';
-//     page.style.textAlign = 'center';
-//     page.style.fontSize = '20px';
-//     page.style.fontWeight = 'bold';
-//     page.style.borderLeft = '10px solid rgb(48, 46, 45)';
-//     page.style.boxShadow = '8px 3px rgb(237, 199, 171), 11px 6px #000000, 12px 7px 0px #000000, 14px 9px 0px #000000';
-//     page.innerHTML += `${myLibrary[i].title}<br><br>`;
-//     page.innerHTML += `${myLibrary[i].author}<br><br>`;
-//     page.innerHTML += `${myLibrary[i].pages}<br><br>`;
-//     if(myLibrary[i].read){
-//       page.innerHTML += `<p> Read </p>`;
-//     }
-//     else{
-//       page.innerHTML += `<p> Not Read </p>`;
-//     }
-//     page.appendChild(deleteButton);
-//     deleteButton.addEventListener('click', () => {
-//       deleteBook(i);
-//     });
-//   }}
+      const authorElem = document.createElement('div');
+      authorElem.textContent = `Author: ${book.author}`;
+      page.appendChild(authorElem);
+  
+      const pagesElem = document.createElement('div');
+      pagesElem.textContent = `Pages: ${book.pages}`;
+      page.appendChild(pagesElem);
+  
+      const readStatus = document.createElement('p');
+      readStatus.textContent = book.read ? 'Read' : 'Not Read';
+      readStatus.style.color = book.read ? 'green' : 'red';
+      page.appendChild(readStatus);
+      page.appendChild(deleteButton);
+      display.appendChild(page);
+      deleteButton.addEventListener('click', () => {
+        deleteBook(index);
+      });
+  })
+  }
+  function deleteBook(index) {
+    myLibrary.splice(index, 1);
+    renderLibrary();
+  }
 
 const sub = document.querySelector('.submit');
 
-sub.addEventListener('onclick', () => {
+sub.addEventListener('mousedown', () => {
   sub.style.backgroundColor = 'rgb(61, 128, 59)';
   sub.style.scale = '0.98';
   sub.style.color = 'white';
 });
-sub.addEventListener('onmouseenter', () => {
+sub.addEventListener('mouseover', () => {
   sub.style.backgroundColor = 'rgb(61, 128, 59)';
   sub.style.scale = '1.02';
   sub.style.color = 'white';
 })
-sub.addEventListener('onmouseleaves', () => {
+sub.addEventListener('mouseleave', () => {
   sub.style.backgroundColor = 'rgb(0,0,0)';
   sub.style.scale = '1';
   sub.style.color = 'white';
