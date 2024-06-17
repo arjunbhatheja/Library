@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (form.style.transform != "translateX(0%)"){
       button.id = "formVisAnimret";
+      button.textContent = 'Hide Form';
     form.id = "formAnimret";
     setTimeout(function(){
       form.style.transform = "translateX(0%)";
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 }
     else{
       button.id = "formVisAnim";
+      button.textContent = 'Add Book';
 
       form.id = "formAnim";
       setTimeout(function(){
